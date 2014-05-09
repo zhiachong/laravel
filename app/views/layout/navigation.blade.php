@@ -6,6 +6,7 @@
 	@if(Auth::check())
 		<li><a href=" {{ URL::route('account-sign-out') }} ">Log Out</a></li>
 		<li><a href=" {{ URL::route('account-change-password') }} ">Change Password</a></li>
+        <li><a href=" {{ URL::route('profile-user', array(Auth::user()->username)) }} ">View Profile</a></li>
 	@else
 		<li><a href=" {{ URL::route('account-sign-in') }} ">Sign In</a></li>
 		<li><a href=" {{ URL::route('account-create') }} ">Create an account</a></li>

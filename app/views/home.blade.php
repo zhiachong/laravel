@@ -4,6 +4,6 @@
 	@if(Auth::check())
 		<p>Hello, {{ Auth::user()->username }} </p>
 	@else
-		<p>You are not signed in.</p> 
+		<p>Please login</p>
 	@endif
 @stop

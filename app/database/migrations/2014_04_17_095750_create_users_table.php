@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration {
 			$table->text('email');
 			$table->text('username');
 			$table->text('password');
-			$table->text('passwrod_temp');
+			$table->text('password_temp');
 			$table->text('code');
 			$table->integer('active');
 

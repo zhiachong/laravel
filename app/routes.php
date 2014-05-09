@@ -21,11 +21,6 @@ Route::get('/about', array(
 	'uses' => 'AboutController@show'
 	));
 
-Route::get('/user/{username}', array(
-	'as' => 'profile-user',
-	'uses' => 'ProfileController@user'
-	));
-
 /*
  | Authenticated group
  | 'before' means before the request into your application
@@ -45,6 +40,14 @@ Route::get('/user/{username}', array(
 				'as' => 'account-change-password-post',
 				'uses' => 'AccountController@postChangePassword'
 			));
+
+            /*
+             * Change profile (POST)
+             */
+            Route::post('/user/change-profile', array(
+               'as' => 'user-change-profile-post',
+               'uses' => 'ProfileController@postChangeProfile'
+            ));
 		});
 
  	/*
@@ -55,13 +58,10 @@ Route::get('/user/{username}', array(
 			'uses' => 'AccountController@getChangePassword'
  	 	));
 
- 	 /*
- 	 | Change Password (POST)
- 	 */
- 	 Route::post('/account/change-password', array(
-			'as' => 'account-change-password-post',
-			'uses' => 'AccountController@postChangePassword'
- 	 	));
+     Route::get('/user/{username}', array(
+         'as' => 'profile-user',
+         'uses' => 'ProfileController@user'
+     ));
 
  	/*
  	 | Sign out (GET)

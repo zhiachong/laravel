@@ -8,11 +8,10 @@ class AccountController extends BaseController
 		if ($user->count())
 		{
 			$user                = $user->first();
-			
 			$user->password      = $user->password_temp;
 			$user->password_temp = '';
 			$user->code          = '';
-			
+
 			if ($user->save())
 			{
 				return Redirect::route('home')
@@ -24,7 +23,7 @@ class AccountController extends BaseController
 				->with('global', 'We could not save your new recovered account info');
 			}
 		}
-		
+
 		return Redirect::route('home')
 		->with('global', 'We could not recover your account');
 	}
@@ -65,15 +64,15 @@ class AccountController extends BaseController
 				{
 					Mail::send('emails.auth.forgot', array(
 					'link' => URL::route('account-recovery', $code),
-					'username' => $user->username, 
+					'username' => $user->username,
 					'password' => $password
-					), 
+					),
 					function($message) use ($user)
 					{
 						// user is accessibe
 						$message->to(
 							$user->email, // email to send to
-							$user->username) // username 
+							$user->username) // username
 							->subject('Recover your account');
 					});
 
@@ -87,7 +86,6 @@ class AccountController extends BaseController
 				}
 			}
 		}
-		
 
 		return Redirect::route('home')
 		->with('global', 'We could not reset your password');
@@ -121,13 +119,13 @@ class AccountController extends BaseController
 
 			// check if old pwd matches current pwd
 			if (Hash::check($oldPassword, $user->getAuthPassword()))
-			{	
+			{
 				$user->password = Hash::make($newPassword);
 
 				if ($user->save())
 				{
 					return Redirect::route('account-change-password')
-		->with('global', 'Your password has been successfully changed');					
+		->with('global', 'Your password has been successfully changed');
 				}
 				else
 				{
@@ -176,7 +174,7 @@ class AccountController extends BaseController
 				// Redirect to your intended page
 				return Redirect::route('home');
 			}
-			else 
+			else
 			{
 				return Redirect::route('account-sign-in')
 				->with('global', 'Wrong username/password or account not activated. Please try again.');
@@ -191,9 +189,13 @@ class AccountController extends BaseController
 	{
 		if (Auth::check())
 		{
-			Auth::logout();	
+			Auth::logout();
 			return Redirect::route('account-sign-in')->with('global', 'You have been logged out.');
 		}
+        else
+        {
+            return Redirect::route('account-sign-in');
+        }
 	}
 
 	public function getCreate()
@@ -205,9 +207,9 @@ class AccountController extends BaseController
 	{
 		$validator = Validator::make(Input::all(),
 			array(
-				'username' 			=> 'required|max:20|min:3|unique:users', 
-				'email' 			=> 'required|max:50|email|unique:users', 
-				'password' 			=> 'required|min:6', 
+				'username' 			=> 'required|max:20|min:3|unique:users',
+				'email' 			=> 'required|max:50|email|unique:users',
+				'password' 			=> 'required|min:6',
 				'password_again' 	=> 'required|same:password'
 			)
 		);
@@ -240,13 +242,13 @@ class AccountController extends BaseController
 				Mail::send('emails.auth.activate', array(
 					'link' => URL::route('account-activate', $code),
 					'username' => $username
-					), 
+					),
 				function($message) use ($user)
 				{
 					// user is accessibe
 					$message->to(
 						$user->email, // email to send to
-						$user->username) // username 
+						$user->username) // username
 						->subject('Activate your account');
 				});
 

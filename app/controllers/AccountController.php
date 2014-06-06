@@ -172,17 +172,30 @@ class AccountController extends BaseController
 			if ($auth)
 			{
 				// Redirect to your intended page
-				return Redirect::route('home');
+				$user = User::where('username', '=', Input::get('username'));
+
+				if ($user->count())
+				{
+					$user = $user->first();
+					if ($user->role == 0)
+					{
+						return Redirect::route('home');		
+					}
+					else if ($user->role == 1)
+					{
+						return "You're an admin!";
+					}
+				}
 			}
 			else
 			{
 				return Redirect::route('account-sign-in')
-				->with('global', 'Wrong username/password or account not activated. Please try again.');
+				->with('global', 'Wrong username/password or account not activated yet. Please try again.');
 			}
 		}
 
 		return Redirect::route('account-sign-in')
-		->with('global', 'There was a problem signing you in. Have you activated?');
+		->with('global', 'There was a problem signing you in. Have you activated your account?');
 	}
 
 	public function getSignOut()
@@ -222,7 +235,7 @@ class AccountController extends BaseController
 		}
 		else
 		{
-			$email = Input::get('email');
+			$email    = Input::get('email');
 			$username = Input::get('username');
 			$password = Input::get('password');
 
@@ -254,7 +267,7 @@ class AccountController extends BaseController
 
 				// send a variable and pass in the variable, global with the value for it
 				return Redirect::route('home')
-				->with('global', 'Your account has been created! We have sent you an email to activate your account');
+				->with('global', 'Your account has been created! We have sent you an email to activate your account.');
 			}
 		}
 	}
@@ -276,6 +289,6 @@ class AccountController extends BaseController
 		}
 
 		return Redirect::route('home')
-		->with('global', 'We could not activate your account. Try again later.');
+		->with('global', 'We could not activate your account. Please try again later.');
 	}
 }

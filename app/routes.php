@@ -18,9 +18,28 @@ Route::get('/', array(
 
 Route::get('/about', array(
 	'as' => 'about',
-	'uses' => 'AboutController@show'
+	'uses' => 'AboutController@showAbout'
 	));
 
+Route::get('/investment', array(
+	'as' => 'investment',
+	'uses' => 'AboutController@showInvestment'
+	));
+
+Route::get('/faq', array(
+	'as' => 'faq',
+	'uses' => 'AboutController@showfaq'
+	));
+
+Route::get('/trading-report', array(
+	'as' => 'trading-report',
+	'uses' => 'AboutController@showtradingReport'
+	));
+
+Route::get('/contact', array(
+	'as' => 'contact',
+	'uses' => 'AboutController@showContact'
+	));
 /*
  | Authenticated group
  | 'before' means before the request into your application
@@ -60,7 +79,7 @@ Route::get('/about', array(
 
      Route::get('/user/{username}', array(
          'as' => 'profile-user',
-         'uses' => 'ProfileController@user'
+         'uses' => 'ProfileController@getUser'
      ));
 
  	/*

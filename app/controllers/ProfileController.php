@@ -2,7 +2,7 @@
 
 class ProfileController extends BaseController
 {
-	public function user($username)
+	public function getUser($username)
 	{
 		$user = User::where('username', '=', $username);
 
@@ -55,7 +55,7 @@ class ProfileController extends BaseController
                 }
                 else
                 {
-                    return "Could not save";
+                    return "An error occurred while trying to save your changes. Please try again.";
                 }
             }
 
